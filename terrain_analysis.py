@@ -2,22 +2,29 @@
 
 '''
 Small example showing surface analysis.
+It is not the fastest solution
 
 Theory is taken from:
 http://www.spatialanalysisonline.com/
+http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm
 
 A html containing all the functions is supplied:
 Functions.html
 
-NN, 2017-01-01
+NN, 2017-01-02
 '''
 
 # Import modules
+from matplotlib import rcParams
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import numpy as np
 from math import atan, tan, sin, cos, pi, sqrt
+
+# Set Latex params
+rcParams['text.usetex'] = True
+rcParams['text.latex.unicode'] = True
 
 # Define a nice peaks function. Borrowed from: https://se.mathworks.com/help/matlab/ref/peaks.html
 def peaks(x,y):
@@ -72,25 +79,26 @@ for i in range(elevation.shape[0])[1:-1]:
 		Define surrounding pixels as explained here:
 		http://www.spatialanalysisonline.com/HTML/raster_models.htm
 
-		NW  N   NE
-		W   Z   E
-		SW  S   SE
+		NW  N   NE                 Z1  Z2  Z3
+		W   Z   E     <-- or -->   Z4  Z5  Z6
+		SW  S   SE                 Z7  Z8  Z9
 		'''
-		Z = elevation[i,j]
-		N = elevation[i-1,j]
-		NW = elevation[i-1,j-1]
-		NE = elevation[i-1,j+1]
-		S = elevation[i+1,j]
-		SW = elevation[i+1,j-1]
-		SE = elevation[i+1,j+1]
-		W = elevation[i,j-1]
-		E = elevation[i,j+1]
+		
+		NW = Z1 = elevation[i-1,j-1]
+		N  = Z2 = elevation[i-1,j]
+		NE = Z3 = elevation[i-1,j+1]
+		W  = Z4 = elevation[i,j-1]
+		Z  = Z5 = elevation[i,j]
+		E  = Z6 = elevation[i,j+1]
+		SW = Z7 = elevation[i+1,j-1]
+		S  = Z8 = elevation[i+1,j]
+		SE = Z9 = elevation[i+1,j+1]
 
 		'''
 		Define partial derivatives in x and y direction
 		Use one of the methods described here:
 		http://www.spatialanalysisonline.com/HTML/raster_models.htm
-		Horns method is probably the best
+		Horns method is good
 		'''
 		# x-direction
 		dz_dx = ((NE + 2*E + SE) - (NW + 2*W + SW)) / (8*dx)
@@ -122,16 +130,16 @@ for i in range(elevation.shape[0])[1:-1]:
 		# Hillshade
 		altitude = 45
 		azimuth = 315
-		zenith_rad = (90-altitude) * (180/pi)
-		azimuth_rad = (360-azimuth+90) * (180/pi)
-		hillshade[i,j] = 255 * abs((cos(zenith_rad) * cos(slope_rad)) + (sin(zenith_rad) * sin(slope_rad) * cos(azimuth_rad - aspect_rad)))
+		zenith_rad = (90-altitude) * (pi/180)
+		azimuth_rad = (360-azimuth+90) * (pi/180)
+		hillshade[i,j] = 255 * ((cos(zenith_rad) * cos(slope_rad)) + (sin(zenith_rad) * sin(slope_rad) * cos(azimuth_rad - aspect_rad)))
 
 # Plot everything using matplotlib (http://matplotlib.org/)
 fig = plt.figure('Surface')
 
 # Plot surface
 ax = fig.gca(projection='3d')
-surf = ax.plot_surface(x, y, z, rstride=1, cstride=1, cmap=cm.gray, linewidth=0.01)
+surf = ax.plot_surface(x, y, z, rstride=1, cstride=1, cmap=cm.terrain, linewidth=0.01)
 max_range = np.array([x.max()-x.min(), y.max()-y.min(), z.max()-z.min()]).max() / 2.0
 mid_x = (x.max()+x.min()) * 0.5
 mid_y = (y.max()+y.min()) * 0.5
@@ -141,7 +149,8 @@ ax.set_ylim(mid_y - max_range, mid_y + max_range)
 ax.set_zlim(mid_z - max_range, mid_z + max_range)
 plt.xlabel('x')
 plt.ylabel('y')
-plt.title('Surface model')
+plt.suptitle('Surface model')
+plt.title(r'$f(x,y) = 3 \left(- x + 1\right)^{2} e^{- x^{2} - \left(y + 1\right)^{2}} - \left(- 10 x^{3} + 2 x - 10 y^{5}\right) e^{- x^{2} - y^{2}}$')
 
 
 fig = plt.figure('Result')
