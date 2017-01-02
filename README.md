@@ -4,7 +4,7 @@ Collection of scripts related to terrain analysis
 ## Contents
 Contains two scripts. One finished and one unfinished.
 
-The [Jupyter Notebook](http://jupyter.org/) called [Equations.ipynb](Equations.ipynb) contains equations collected from various places.
+The [Jupyter Notebook](http://jupyter.org/) called [Equations.ipynb](https://nbviewer.jupyter.org/github/nielsin/Terrain-Analysis/blob/master/Equations.ipynb) contains equations collected from various sources.
 
 ## Function
 The script takes a surface model.
