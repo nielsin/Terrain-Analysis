@@ -23,8 +23,8 @@ import numpy as np
 from math import atan, tan, sin, cos, pi, sqrt
 
 # Set Latex params
-rcParams['text.usetex'] = True
-rcParams['text.latex.unicode'] = True
+#rcParams['text.usetex'] = True
+#rcParams['text.latex.unicode'] = True
 
 # Define a nice peaks function. Borrowed from: https://se.mathworks.com/help/matlab/ref/peaks.html
 def peaks(x,y):
