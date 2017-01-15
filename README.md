@@ -4,9 +4,9 @@ Collection of scripts related to terrain analysis
 ## Contents
 Contains two scripts. One finished and one unfinished.
 
-The [Jupyter Notebook](http://jupyter.org/) called [Equations.ipynb](https://nbviewer.jupyter.org/github/nielsin/Terrain-Analysis/blob/master/Equations.ipynb) contains equations collected from various sources.
-
-The [Jupyter Notebook](http://jupyter.org/) called [Raster.ipynb](https://nbviewer.jupyter.org/github/nielsin/Terrain-Analysis/blob/master/Raster.ipynb) displays a simple raster in various ways.
+The [Jupyter Notebook](http://jupyter.org/) is used to create notebooks with some theory:
+* [Equations.ipynb](https://nbviewer.jupyter.org/github/nielsin/Terrain-Analysis/blob/master/Equations.ipynb) contains equations collected from various sources.
+* [Raster.ipynb](https://nbviewer.jupyter.org/github/nielsin/Terrain-Analysis/blob/master/Raster.ipynb) displays a simple raster in various ways.
 
 ## Function
 The script takes a surface model.
