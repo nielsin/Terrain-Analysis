@@ -131,7 +131,8 @@ for i in range(elevation.shape[0])[1:-1]:
 		altitude = 45
 		azimuth = 315
 		zenith_rad = (90-altitude) * (pi/180)
-		azimuth_rad = (360-azimuth+90) * (pi/180)
+		#azimuth_rad = (360-azimuth+90) * (pi/180)
+		azimuth_rad = azimuth * (pi/180)
 		hillshade[i,j] = 255 * ((cos(zenith_rad) * cos(slope_rad)) + (sin(zenith_rad) * sin(slope_rad) * cos(azimuth_rad - aspect_rad)))
 
 # Plot everything using matplotlib (http://matplotlib.org/)
